@@ -5,12 +5,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MySQLiteHelper dbHelper = new MySQLiteHelper(this);
+        BookDAO bookDAO = new BookDAO(dbHelper);
+
+        /**
+         * CRUD Operations
+         * */
+        // add Books
+        bookDAO.addBook(new Book("Android Application Development Cookbook", "Wei Meng Lee"));
+        bookDAO.addBook(new Book("Android Programming: The Big Nerd Ranch Guide", "Bill Phillips and Brian Hardy"));
+        bookDAO.addBook(new Book("Learn Android App Development", "Wallace Jackson"));
+
+        // get all books
+        List<Book> list = bookDAO.getAllBooks();
+
+        // delete one book
+        bookDAO.deleteBook(list.get(0));
+
+        // get all books
+        List<Book> list2 =  bookDAO.getAllBooks();
     }
 
     @Override
